@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import MovieList from "./MovieList";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import TextField from '@mui/material/TextField';
-import axios from "axios";
+import Box from '@mui/material/Box';
 import AxiosTmdb from "./AxiosTmdb";
+import Button from '@mui/material/Button';
 
 const MovieListContainer = () => {
+    const [page, setPage] = useState(1);
     const [movies, setMovies] = useState([]);
     const [filterData, setFilterData] = useState([]);
     const [search, setSearch] = useState("");
@@ -24,25 +26,27 @@ const MovieListContainer = () => {
         setMovies(resultado)
     }
 
+    const actualPage = (quantity) => {
+        if (quantity === "subtract" && page > 1) {
+            setPage(page - 1)
+        } else if (quantity === "add") {
+            setPage(page + 1)
+        }
+    }
+
     useEffect(() => {
-        axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=314dd2fd158d1a156815bfda6f2037c3&language=en-US&page=1`)
-            .then((response) => {
-                setMovies(response.data.results);
-                setFilterData(response.data.results);
-            })
-        /* const fetchMovies = async (category) => {
+        const fetchMovies = async (category) => {
             const { data } = await AxiosTmdb.get(category)
+            console.log(data)
             setMovies(data.results)
             setFilterData(data.results)
         }
 
-        fetchMovies('tv/popular') */
-    }, [])
-
-    console.log(movies)
+        fetchMovies(`movie/popular?page=${page}`);
+    }, [page])
 
     return (
-        <>
+        <Box>
             <div className='d-flex justify-content-center p-2 sticky-top'>
                 <form className="d-flex w-25 mt-2" role="search">
                     <TextField className="form-control" onChange={handleChange} value={search} type="search" label="Search Movie" />
@@ -51,7 +55,12 @@ const MovieListContainer = () => {
             <main className='m-4 d-flex flex-direction-row justify-content-center d-flex flex-wrap'>
                 <MovieList movies={movies} />
             </main>
-        </>
+            <Box sx={{ padding: 1 }} className="d-flex justify-content-center align-items-center">
+                <Button variant="outlined" className="me-2" onClick={() => actualPage("subtract")}>Previous Page</Button>
+                {page}
+                <Button variant="outlined" className="ms-2" onClick={() => actualPage("add")}>Next Page</Button>
+            </Box>
+        </Box>
     );
 }
 

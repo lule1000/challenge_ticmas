@@ -7,11 +7,11 @@ const getPostUrl = (() => {
 
 const NavBar = () => {
     return (
-        <nav>
-            <Box sx={{ width: 175, margin: 2 }}>
+        <Box sx={{ backgroundColor: '#1a237e' }}>
+            <Box sx={{ width: 175, padding: 2 }}>
                 <img src={getPostUrl()} alt="logo" />
             </Box>
-        </nav>
+        </Box>
     );
 }
 
