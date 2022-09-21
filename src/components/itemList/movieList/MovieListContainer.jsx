@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { useShowMoviesContext } from "../context/ShowMoviesContext";
+import { useShowMoviesContext } from "../../context/ShowMoviesContext";
 import MovieList from "./MovieList";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Box from '@mui/material/Box';
-import AxiosTmdb from "./AxiosTmdb";
+import AxiosTmdb from "../AxiosTmdb";
 import Button from '@mui/material/Button';
 
 const MovieListContainer = () => {

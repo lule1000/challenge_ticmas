@@ -1,37 +1,33 @@
+import { useState } from 'react';
 import TextField from '@mui/material/TextField';
-import { useShowMoviesContext } from "../context/ShowMoviesContext";
 import AxiosTmdb from '../itemList/AxiosTmdb';
 
 const InternalBrowser = () => {
-    const { setMovies, filterData, setFilterData, search, setSearch } = useShowMoviesContext();
+    const [filterData, setFilterData] = useState([]);
 
     const handleChange = (e) => {
-        setSearch(e.target.value);
-        filterSearch(search);
+        setFilterData(e.target.value)
+        filterSearch(e.target.value);
     }
 
     const filterSearch = (termSearch) => {
-        let resultado = filterData.filter((e) => {
+        let result = filterData.filter((e) => {
             if (e.title.toString().toLowerCase().includes(termSearch.toLowerCase())) {
                 return e;
             }
         })
-        setMovies(resultado)
-        
-        const fetchMovies = async (category) => {
-            const { data } = await AxiosTmdb.get(category)
-            setFilterData(data.results)
-        }
-
-        fetchMovies(`search/movie?query=${search}`);
     }
 
+    const fetchMovies = async (category) => {
+        const { data } = await AxiosTmdb.get(category)
+        console.log(data)
+    }
+    
 
     return (
         <div className='d-flex justify-content-center p-2 sticky-top'>
             <form className="d-flex w-25 mt-2" role="search">
-                <TextField className="form-control" onChange={handleChange} value={search} type="search" label="Search Movie" />
-
+                <TextField className="form-control" onChange={handleChange} type="search" label="Search Movie" />
             </form>
         </div>
     );

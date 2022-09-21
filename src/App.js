@@ -1,7 +1,7 @@
 import './App.css';
 import Box from '@mui/material/Box';
 import NavBar from './components/navbar/NavBar';
-import MovieListContainer from './components/itemList/MovieListContainer';
+import MovieListContainer from './components/itemList/movieList/MovieListContainer';
 import ShowMoviesProvider from './components/context/ShowMoviesContext';
 import InternalBrowser from './components/internalBrowser/InternalBrowser';
 
